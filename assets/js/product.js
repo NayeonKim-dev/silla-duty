@@ -13,12 +13,13 @@ $(function(){
     // 상품 리스트 출력
     let skin = ``;
     let rank = 1;
+    let number =1;
             sortData.forEach(element => {
                 skin+=`<li class="swiper-slide">
                 <a href="#none">
                     <div class="img-area">
                         <em class="ranking">${rank}<span class="blind">랭킹</span></em>
-                        <div class="img-box"><img src=${element.url} alt=""></div>
+                        <div class="img-box"><img src=${element.url} alt="스킨케어 슬라이드${number}"></div>
                     </div>
                     <div class="flex-area">
                         <div class="desc-box">
@@ -35,6 +36,7 @@ $(function(){
                 </a>
             </li>`;
             rank++;
+            number++;
             });
             // 출력될 리스트 기준
             $('.sc-popul .list-swiper.skin .swiper-wrapper').html(skin)
