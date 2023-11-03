@@ -604,6 +604,24 @@
     width: fit-content;
 }
 
+.sc-newbd .main-area .desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sc-newbd .prodt-area .desc-box {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
 /* sc-tiping ----------------------------------------- */
 .sc-tiping .headline {
     margin-bottom: 17px;

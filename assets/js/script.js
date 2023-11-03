@@ -11,33 +11,33 @@ $(function () {
     pagination: {
       el: ".pagination",
       type: "fraction",
-    },
+    }
   });
 
   // sc-pdtview, sc-promt, sc-sale, sc-only(top),sc-theme
   let freeSlide = new Swiper(".free-swiper", {
     slidesPerView: 'auto',
     freeMode: true,
-    spaceBetween: 10,
+    spaceBetween: 10
   });
 
   // sc-tiping 
   let tipSlide = new Swiper(".tiping-swiper", {
     slidesPerView: 'auto',
     freeMode: true,
-    spaceBetween: 15,
+    spaceBetween: 15
   });
 
   // sc-expert
   let exeSlide = new Swiper(".exe-swiper", {
     slidesPerView: 'auto',
-    spaceBetween: 10,
+    spaceBetween: 10
   });
 
   // sc-focus
   let focusSlide = new Swiper(".focus-swiper", {
     slidesPerView: 'auto',
-    spaceBetween: 10,
+    spaceBetween: 10
   });
 
   // sc-popul, sc-only(bottom)  
@@ -47,7 +47,7 @@ $(function () {
       rows: 3,
     },
     spaceBetween: 10,
-    freeMode: true,
+    freeMode: true
   });
 
   // sc-benft, sc-spon  
@@ -67,6 +67,7 @@ $(function () {
   // sc-newbd
   let topDownSlide = new Swiper(".topdown-swiper", {
     spaceBetween: 10,
+    loop: true,
     slidesPerView: 'auto',
     autoplay: {
       delay: 4000,
@@ -126,6 +127,9 @@ $(function () {
     observer: true,
     observeParents: true
   });
+  
+  // sc-popul tab-swiper 이동 방지 조건 미디어 쿼리 변수
+  const max1020 = window.matchMedia("(max-width: 1020px)");
 
   // tab slide move
   let tabSwiperItem = $('.sc-popul .tab-swiper .swiper-wrapper .swiper-slide a');
@@ -135,34 +139,38 @@ $(function () {
   });
 
   function muCenter(target) {
-    let tabwrap = $('.sc-popul .tab-swiper .swiper-wrapper');
-    let targetPos = target.position(); 
-    let box = $('.sc-popul .tab-swiper');
-    let boxHarf = box.width() / 2;
-    let pos;
-    let swiperDom = $('.sc-popul .tab-swiper .swiper-wrapper')[0];
-    let swiperGap = parseFloat(getComputedStyle(swiperDom).gap);
-    let listWidth = 0;
-    tabwrap.find('.swiper-slide').each(function () { listWidth += $(this).outerWidth() + swiperGap; })
+    // max-width: 1020px 조건에서만 탭 이동 실행
+    if (max1020.matches) {
+      let tabwrap = $('.sc-popul .tab-swiper .swiper-wrapper');
+      let targetPos = target.position(); 
+      let box = $('.sc-popul .tab-swiper');
+      let boxHarf = box.width() / 2;
+      let pos;
+      let swiperDom = $('.sc-popul .tab-swiper .swiper-wrapper')[0];
+      let swiperGap = parseFloat(getComputedStyle(swiperDom).gap);
+      let listWidth = 0;
+      tabwrap.find('.swiper-slide').each(function () { listWidth += $(this).outerWidth() + swiperGap; });
 
+      let selectTargetPos = targetPos.left + target.outerWidth() / 2;
+      if (selectTargetPos <= boxHarf) { // left
+        pos = 0;
+      } else if ((listWidth - selectTargetPos) <= boxHarf) { //right
+        pos = listWidth - box.width();
+      } else {
+        pos = selectTargetPos - boxHarf;
+      }
 
-    let selectTargetPos = targetPos.left + target.outerWidth() / 2;
-    if (selectTargetPos <= boxHarf) { // left
-      pos = 0;
-    } else if ((listWidth - selectTargetPos) <= boxHarf) { //right
-      pos = listWidth - box.width();
-    } else {
-      pos = selectTargetPos - boxHarf;
-    }
-
-    setTimeout(function () {
-      tabwrap.css({
-        "transform": "translate3d(" + (pos * -1) + "px, 0, 0)",
-        "transition-duration": "500ms"
-      })
-    }, 200);
+      setTimeout(function () {
+        tabwrap.css({
+          "transform": "translate3d(" + (pos * -1) + "px, 0, 0)",
+          "transition-duration": "500ms"
+        })
+      }, 200);
+    };
   };
 
+
+  
   // tab - main slide 연동
   // sc-expert
   $('.sc-expert .tab-item').click(function () {
@@ -292,5 +300,4 @@ $(function () {
     $('html, body').animate({ scrollTop: 0 }, 400);
     return false;
   });
-
-}) //end 
+}); 
